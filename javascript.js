@@ -24,10 +24,8 @@ const gameBoard = (() => {
         tile.setAttribute('class', 'tile');
         tile.addEventListener('click', () =>{
             if(gameover == true){
-                textContainer.textContent = `${symb} WINS!!!!`;
                 return('');
             }
-
             tile.textContent = symb;
             if(symb == 'X'){
                 playerX.playerMoves.push(Number(tile.id));
@@ -54,7 +52,7 @@ const gameBoard = (() => {
                     textContainer.textContent = `O WINS!!!!`;
                 }
             }
-        })
+        });
         boardElement.appendChild(tile);
         const xButton = document.getElementById('xBut');
         const oButton = document.getElementById('oBut');
@@ -63,10 +61,9 @@ const gameBoard = (() => {
         })
         oButton.addEventListener('click', () =>{
             symb = 'O';
-        })
+        });
     }
 });
-
 function winCheck(examArray){
     console.log(examArray);
     let winStatus = false;
