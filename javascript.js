@@ -107,7 +107,7 @@ function findBestMove(playerMoves, opponentMoves) {
     }
     return bestMove;
 }
-function minimax(playerMoves, opponentMoves, isMaximizing) {
+function minimax(playerMoves, opponentMoves, isMaximizer) {
     const scores = {
         X: -1,
         O: 1,
@@ -121,21 +121,21 @@ function minimax(playerMoves, opponentMoves, isMaximizing) {
         return scores.draw;
     }
     const availableSpots = emptySpots();
-    let bestScore = isMaximizing ? -Infinity : Infinity;
+    let bestScore = isMaximizer ? -Infinity : Infinity;
     for (let i = 0; i < availableSpots.length; i++) {
         const move = availableSpots[i];
-        if (isMaximizing) {
+        if (isMaximizer) {
             playerMoves.push(move);
         } else {
             opponentMoves.push(move);
         }
-        const score = minimax(playerMoves, opponentMoves, !isMaximizing);
-        if (isMaximizing) {
+        const score = minimax(playerMoves, opponentMoves, !isMaximizer);
+        if (isMaximizer) {
             bestScore = Math.max(score, bestScore);
         } else {
             bestScore = Math.min(score, bestScore);
         }
-        if (isMaximizing) {
+        if (isMaximizer) {
             playerMoves.pop();
         } else {
             opponentMoves.pop();
