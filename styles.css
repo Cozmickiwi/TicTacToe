@@ -30,6 +30,7 @@ body {
     animation-iteration-count: 1;
     animation-duration: .1s;
     animation-timing-function: ease-out;
+    user-select: none;
 }
 
 .buttons {
