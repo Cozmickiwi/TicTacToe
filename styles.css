@@ -1,3 +1,13 @@
+@font-face {
+    font-family: escher;
+    src: url(fonts/escher.ttf);
+}
+
+@font-face {
+    font-family: macula;
+    src: url(fonts/Macula\ Line.otf);
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -6,16 +16,17 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-color: rgb(182, 217, 248);
 }
 
 .gameBoard {
     width: 450px;
     height: 450px;
-    background-color: rgb(71, 102, 118);
+    background-color: rgb(182, 217, 248);
     display: grid;
-    gap: 4px;
+    gap: 10px;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    border: 5px solid rgb(71, 102, 118);
+    border: 5px solid rgb(182, 217, 248);
     border-radius: 8px;
 }
 
@@ -25,12 +36,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 4em;
+    font-family: macula;
+    font-weight: 500;
+    font-size: 5em;
     animation-iteration-count: 1;
     animation-duration: .1s;
     animation-timing-function: ease-out;
     user-select: none;
+    /*box-shadow: rgb(255, 255, 255) 0px 5px 50px -20px, rgba(255, 255, 255, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 10px 0px inset;*/
+    box-shadow: rgba(0, 0, 0, 0.325) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .buttons {
@@ -53,18 +67,18 @@ body {
     }
     25%{
         color: rgba(0, 0, 0, 0.25);
-        font-size: 5.5em;
+        font-size: 5.75em;
     }
     50%{
         color: rgba(0, 0, 0, 0.5);
-        font-size: 5em;
+        font-size: 5.5em;
     }
     75%{
         color: rgba(0, 0, 0, 0.75);
-        font-size: 4.5em;
+        font-size: 5.25em;
     }
     100%{
         color: rgb(0, 0, 0);
-        font-size: 4em;
+        font-size: 5em;
     }
 }
