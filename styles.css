@@ -27,6 +27,9 @@ body {
     justify-content: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 4em;
+    animation-iteration-count: 1;
+    animation-duration: .1s;
+    animation-timing-function: ease-out;
 }
 
 .buttons {
@@ -40,4 +43,27 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 2em;
     font-weight: 700;
+}
+
+@keyframes addSymbol {
+    0%{
+        color: rgba(0, 0, 0, 0);
+        font-size: 6em;
+    }
+    25%{
+        color: rgba(0, 0, 0, 0.25);
+        font-size: 5.5em;
+    }
+    50%{
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 5em;
+    }
+    75%{
+        color: rgba(0, 0, 0, 0.75);
+        font-size: 4.5em;
+    }
+    100%{
+        color: rgb(0, 0, 0);
+        font-size: 4em;
+    }
 }

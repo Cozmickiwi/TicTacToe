@@ -25,6 +25,7 @@ const gameBoard = (() => {
                 return('');
             }
             tile.textContent = symb;
+            tile.style.animationName = ('addSymbol')
             if(symb == 'X'){
                 playerX.playerMoves.push(Number(tile.id));
                 if((playerX.playerMoves).length >= 3){
