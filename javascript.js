@@ -1,59 +1,69 @@
-//create gameboard object containing gameboard array
 let symb;
 let textContainer = document.querySelector('.textContainer');
 let gameover = false;
-function curPlayer(symbol, moves){
-        const playerSymbol = symbol;
-        const playerMoves = moves;
-        return { playerSymbol, playerMoves};
-    }
-    const playerX = curPlayer('X', []);
-    const playerO = curPlayer('O', []);
-const gameBoard = (() => {
+let difficulty = 'medium';
+function curPlayer(symbol, moves) {
+    const playerSymbol = symbol;
+    const playerMoves = moves;
+    return { playerSymbol, playerMoves };
+}
+
+const playerX = curPlayer('X', []);
+const playerO = curPlayer('O', []);
+
+const gameBoard = () => {
     let boardArr = [];
-    for(i=1;i<10;i++){
+    for (let i = 1; i < 10; i++) {
         boardArr.push('');
     }
     symb = 'X';
+
     let boardElement = document.querySelector('.gameBoard');
-    for(let tileNum in boardArr){
+    for (let tileNum in boardArr) {
         let tile = document.createElement('div');
-        tile.setAttribute('id', `${(Number(tileNum)+1)}`);
+        tile.setAttribute('id', `${Number(tileNum) + 1}`);
         tile.setAttribute('class', 'tile');
-        function tileClick(){
-            if(gameover == true){
-                return('');
+
+        function tileClick() {
+            if (gameover == true) {
+                return '';
             }
             tile.textContent = symb;
-            tile.style.animationName = ('addSymbol')
-            if(symb == 'X'){
+            tile.style.animationName = 'addSymbol';
+            if (symb == 'X') {
                 playerX.playerMoves.push(Number(tile.id));
-                if((playerX.playerMoves).length >= 3){
+                if (playerX.playerMoves.length >= 3) {
                     checkWin(playerX.playerMoves);
                 }
                 symb = 'O';
                 if (playerX.playerMoves.length + playerO.playerMoves.length === 9) {
-                    textContainer.textContent = 'It\'s a draw!';
+                    textContainer.textContent = "It's a draw!";
                     gameover = true;
                 }
-                if(gameover != true){
+                if (gameover != true) {
                     setTimeout(() => {
-                    computer();
+                        computer();
                     }, 500);
                 }
-            }else if(symb == 'O'){
+            } else if (symb == 'O') {
                 playerO.playerMoves.push(Number(tile.id));
-                if((playerO.playerMoves).length >= 3){
+                if (playerO.playerMoves.length >= 3) {
                     winCheck(playerO.playerMoves);
                 }
                 symb = 'X';
             }
-            if(gameover!= true)textContainer.textContent = `Player ${symb}'s turn!`;
+            if (gameover != true) textContainer.textContent = `Player ${symb}'s turn!`;
         }
-        tile.addEventListener('click', function() {tileClick()}, {once: true});
+
+        tile.addEventListener('click', function () {
+            tileClick();
+        }, {
+            once: true
+        });
         boardElement.appendChild(tile);
     }
-});
+};
+
 function makeMove(tileId, symbol) {
     if (symbol == 'X') {
         playerX.playerMoves.push(tileId);
@@ -77,25 +87,30 @@ function makeMove(tileId, symbol) {
         }
     }
 }
+
 function checkWin(moves) {
     const winningMoves = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
     return winningMoves.some((combo) => combo.every((move) => moves.includes(move)));
 }
+
 function computer() {
     symb = 'O';
-    const bestMove = findBestMove(playerO.playerMoves, playerX.playerMoves);
+    let rng = Math.floor(Math.random() * 4);
+    const bestMove = findBestMove(playerO.playerMoves, playerX.playerMoves, 0);
     const compTile = document.getElementById(bestMove);
     compTile.textContent = symb;
+    compTile.style.pointerEvents = 'none';
     makeMove(bestMove, symb);
 }
-function findBestMove(playerMoves, opponentMoves) {
+
+function findBestMove(playerMoves, opponentMoves, depth) {
     const availableSpots = emptySpots();
     let bestScore = -Infinity;
     let bestMove;
     for (let i = 0; i < availableSpots.length; i++) {
         const move = availableSpots[i];
         playerMoves.push(move);
-        const score = minimax(playerMoves, opponentMoves, false);
+        const score = minimax(playerMoves, opponentMoves, depth - 1, false);
         playerMoves.pop();
         if (score > bestScore) {
             bestScore = score;
@@ -104,42 +119,61 @@ function findBestMove(playerMoves, opponentMoves) {
     }
     return bestMove;
 }
-function minimax(playerMoves, opponentMoves, isMaximizer) {
+
+function evaluate(playerMoves, opponentMoves) {
     const scores = {
         X: -1,
         O: 1,
         draw: 0
     };
+
     if (checkWin(opponentMoves)) {
         return -scores[symb];
     } else if (checkWin(playerMoves)) {
         return scores[symb];
     } else if (playerMoves.length + opponentMoves.length === 9) {
         return scores.draw;
+    } else {
+        return 0; // Intermediate score for other situations
     }
+}
+
+
+function minimax(playerMoves, opponentMoves, depth, isMaximizer) {
     const availableSpots = emptySpots();
-    let bestScore = isMaximizer ? -Infinity : Infinity;
-    for (let i = 0; i < availableSpots.length; i++) {
-        const move = availableSpots[i];
-        if (isMaximizer) {
+    const scores = {
+        X: -1,
+        O: 1,
+        draw: 0
+    };
+
+    if (depth === 0 || checkWin(playerMoves) || checkWin(opponentMoves) || availableSpots.length === 0) {
+        return evaluate(playerMoves, opponentMoves);
+    }
+
+    if (isMaximizer) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < availableSpots.length; i++) {
+            const move = availableSpots[i];
             playerMoves.push(move);
-        } else {
-            opponentMoves.push(move);
-        }
-        const score = minimax(playerMoves, opponentMoves, !isMaximizer);
-        if (isMaximizer) {
+            const score = minimax(playerMoves, opponentMoves, depth - 1, false);
+            playerMoves.pop();
             bestScore = Math.max(score, bestScore);
-        } else {
+        }
+        return bestScore;
+    } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < availableSpots.length; i++) {
+            const move = availableSpots[i];
+            opponentMoves.push(move);
+            const score = minimax(playerMoves, opponentMoves, depth - 1, true);
+            opponentMoves.pop();
             bestScore = Math.min(score, bestScore);
         }
-        if (isMaximizer) {
-            playerMoves.pop();
-        } else {
-            opponentMoves.pop();
-        }
+        return bestScore;
     }
-    return bestScore;
 }
+
 function emptySpots() {
     const emptySpotsArr = [];
     for (let i = 1; i < 10; i++) {
@@ -149,4 +183,5 @@ function emptySpots() {
     }
     return emptySpotsArr;
 }
+
 gameBoard();
