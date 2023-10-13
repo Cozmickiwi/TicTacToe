@@ -51,6 +51,7 @@ const gameBoard = () => {
             if (gameover != true) textContainer.textContent = `Player ${symb}'s turn!`;
         }
         tile.addEventListener('click', function () {
+            textContainer.style.visibility = 'visible';
             tileClick();
         }, {
             once: true

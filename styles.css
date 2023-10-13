@@ -67,6 +67,7 @@ body {
     font-weight: 700;
     padding: 10px;
     border-radius: 15px;
+    visibility: hidden;
 }
 
 @keyframes addSymbol {
