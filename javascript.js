@@ -32,6 +32,10 @@ const gameBoard = (() => {
                     checkWin(playerX.playerMoves);
                 }
                 symb = 'O';
+                if (playerX.playerMoves.length + playerO.playerMoves.length === 9) {
+                    textContainer.textContent = 'It\'s a draw!';
+                    gameover = true;
+                }
                 if(gameover != true){
                     setTimeout(() => {
                     computer();
@@ -44,14 +48,7 @@ const gameBoard = (() => {
                 }
                 symb = 'X';
             }
-            textContainer.textContent = `Player ${symb}'s turn!`;
-            if(gameover == true){
-                if(symb == 'O'){
-                    textContainer.textContent = `X WINS!!!!`;
-                }else if(symb == 'X'){
-                    textContainer.textContent = `O WINS!!!!`;
-                }
-            }
+            if(gameover!= true)textContainer.textContent = `Player ${symb}'s turn!`;
         }
         tile.addEventListener('click', function() {tileClick()}, {once: true});
         boardElement.appendChild(tile);
