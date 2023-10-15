@@ -188,17 +188,12 @@ function evaluate(playerMoves, opponentMoves) {
     } else if (playerMoves.length + opponentMoves.length === 9) {
         return scores.draw;
     } else {
-        return 0; // Intermediate score for other situations
+        return 0;
     }
 }
 
 function minimax(playerMoves, opponentMoves, depth, isMaximizer) {
     const availableSpots = emptySpots();
-    const scores = {
-        X: -1,
-        O: 1,
-        draw: 0
-    };
     if (depth === 0 || checkWin(playerMoves) || checkWin(opponentMoves) || availableSpots.length === 0) {
         return evaluate(playerMoves, opponentMoves);
     }
@@ -253,22 +248,22 @@ twoPlayerButton.addEventListener('click', () => {
 easyButton.addEventListener('click', () => {
     difficulty = 'easy';
     speechBubble.style.animationDuration = '0s';
-    buttons.style.display = 'none'
+    buttons.style.display = 'none';
     celCatCont.style.display = 'flex';
     godCatImg.style.display = 'none';
-    sillyCatImg.style.visibility = 'visible'
-    textBubbleContent.textContent = "Hai!! Letz play! :3"
+    sillyCatImg.style.visibility = 'visible';
+    textBubbleContent.textContent = "Hai!! Letz play! :3";
     catContainer.style.animationName = 'a';
     gameBoard();
 }, {once: true});
 medButton.addEventListener('click', () => {
     difficulty = 'medium';
     speechBubble.style.animationDuration = '0s';
-    buttons.style.display = 'none'
+    buttons.style.display = 'none';
     celCatCont.style.display = 'flex';
     godCatImg.style.display = 'none';
-    sillyCatImg.style.visibility = 'visible'
-    textBubbleContent.textContent = "Hai!! Letz play! :3"
+    sillyCatImg.style.visibility = 'visible';
+    textBubbleContent.textContent = "Hai!! Letz play! :3";
     catContainer.style.animationName = 'a';
     gameBoard();
 }, {once: true});
@@ -276,7 +271,7 @@ impossibleButton.addEventListener('click', () => {
     difficulty = 'impossible';
     buttons.style.display = 'none';
     boardElement.style.backgroundColor = 'rgba(182, 217, 248, 0)'
-    boardElement.style.border = '0px solid'
+    boardElement.style.border = '0px solid';
     document.body.setAttribute('class', 'backgroundChange');
     celCatCont.style.display = 'flex';
     sillyCatImg.style.display = 'none';
