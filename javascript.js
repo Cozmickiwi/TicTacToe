@@ -150,7 +150,7 @@ function computer() {
         makeMove(ranMove, symb);
     }
     else if(difficulty == 'impossible' || difficulty == 'medium'){
-        const bestMove = findBestMove(playerO.playerMoves, playerX.playerMoves, 0);
+        const bestMove = findBestMove(playerO.playerMoves, playerX.playerMoves, 8);
         const compTile = document.getElementById(bestMove);
         compTile.textContent = symb;
         compTile.style.pointerEvents = 'none';
