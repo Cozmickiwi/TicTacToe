@@ -55,8 +55,8 @@ const gameBoard = () => {
                     gameover = true;
                     return('a')
                 }
-                if (gameover != true) {
-                    if(difficulty != 'twoPlayer'){
+                if(difficulty != 'twoPlayer'){
+                    if (gameover != true) {
                     setTimeout(() => {
                         computer();
                     }, 500);
@@ -245,6 +245,11 @@ let buttons = document.querySelector('.buttons');
 let speechBubble = document.getElementById('speech-bubble');
 let easyButton = document.getElementById('easy');
 let twoPlayerButton = document.getElementById('2Player');
+twoPlayerButton.addEventListener('click', () => {
+    difficulty = 'twoPlayer';
+    buttons.style.display = 'none';
+    gameBoard();
+})
 easyButton.addEventListener('click', () => {
     difficulty = 'easy';
     speechBubble.style.animationDuration = '0s';
