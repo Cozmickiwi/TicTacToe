@@ -93,6 +93,8 @@ function makeMove(tileId, symbol) {
     if (checkWin(playerX.playerMoves)) {
         if(difficulty == 'medium' || difficulty == 'easy'){
             textBubbleContent.textContent =  "You're, like, sooo good at this game! Congrats, I think... 😸";
+            textContainer.textContent = 'X WINS!!!!';
+            gameover = true;
         }
         textContainer.textContent = 'X WINS!!!!';
         gameover = true;
