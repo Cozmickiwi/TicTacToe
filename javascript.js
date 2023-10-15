@@ -1,8 +1,9 @@
 let symb;
 let textContainer = document.querySelector('.textContainer');
 let gameover = false;
-let difficulty = 'impossible';
+let difficulty;
 let textBubbleContent = document.getElementById('speech-txt');
+let boardElement = document.querySelector('.gameBoard');
 function curPlayer(symbol, moves) {
     const playerSymbol = symbol;
     const playerMoves = moves;
@@ -16,7 +17,6 @@ const gameBoard = () => {
         boardArr.push('');
     }
     symb = 'X';
-    let boardElement = document.querySelector('.gameBoard');
     for (let tileNum in boardArr) {
         let tile = document.createElement('div');
         tile.setAttribute('id', `${Number(tileNum) + 1}`);
@@ -25,7 +25,12 @@ const gameBoard = () => {
             if (gameover == true) {
                 return '';
             }
-            tile.textContent = symb;
+            if(chosenSymb == 'O'){
+                tile.textContent = 'O';
+            }
+            else{
+                tile.textContent = symb;
+            }
             tile.style.animationName = 'addSymbol';
             if (symb == 'X') {
                 playerX.playerMoves.push(Number(tile.id));
@@ -39,7 +44,11 @@ const gameBoard = () => {
                     
                     textContainer.textContent = 'X WINS!!!!';
                     gameover = true;
-                }
+                    }
+                    else if(difficulty = 'twoPlayer'){
+                        textContainer.textContent = 'X WINS!!!!';
+                        gameover = true;
+                    }
                 }
                 else if (playerX.playerMoves.length + playerO.playerMoves.length === 9) {
                     if(difficulty == 'impossible'){
@@ -50,8 +59,9 @@ const gameBoard = () => {
                     }
                     textContainer.textContent = "It's a draw!";
                     gameover = true;
+                    return('a')
                 }
-                if (gameover != true) {
+                if (gameover != true || difficulty != 'twoPlayer') {
                     setTimeout(() => {
                         computer();
                     }, 500);
@@ -59,9 +69,13 @@ const gameBoard = () => {
             } else if (symb == 'O') {
                 playerO.playerMoves.push(Number(tile.id));
                 if (playerO.playerMoves.length >= 3) {
-                    winCheck(playerO.playerMoves);
+                    checkWin(playerO.playerMoves);
                 }
                 symb = 'X';
+            }
+            if(checkWin(playerO.playerMoves) && difficulty == 'twoPlayer'){
+                textContainer.textContent = 'O WINS!!!!';
+                gameover = true;
             }
             if (gameover != true) textContainer.textContent = `Player ${symb}'s turn!`;
         }
@@ -93,14 +107,15 @@ function makeMove(tileId, symbol) {
         else if(difficulty == 'medium' || difficulty == 'easy'){
             textBubbleContent.textContent = "Wow, I didn't even expect to win, but yay, I guess! 🐾";
         }
-        textContainer.textContent = 'O WINS!!!!';
         gameover = true;
     } else if (playerX.playerMoves.length + playerO.playerMoves.length === 9) {
         textContainer.textContent = "It's a draw!";
         gameover = true;
     } else {
         symb = symb === 'X' ? 'O' : 'X';
+        
         textContainer.textContent = `Player ${symb}'s turn!`;
+        
         if (symb === 'O') {
             computer();
         }
@@ -235,6 +250,8 @@ let catContainer = document.querySelector('.catCont');
 let buttons = document.querySelector('.buttons');
 let speechBubble = document.getElementById('speech-bubble');
 let easyButton = document.getElementById('easy');
+let twoPlayerButton = document.getElementById('2Player');
+
 easyButton.addEventListener('click', () => {
     difficulty = 'easy';
     speechBubble.style.animationDuration = '0s';
@@ -259,7 +276,9 @@ medButton.addEventListener('click', () => {
 }, {once: true});
 impossibleButton.addEventListener('click', () => {
     difficulty = 'impossible';
-    buttons.style.display = 'none'
+    buttons.style.display = 'none';
+    boardElement.style.backgroundColor = 'rgba(182, 217, 248, 0)'
+    boardElement.style.border = '0px solid'
     document.body.setAttribute('class', 'backgroundChange');
     celCatCont.style.display = 'flex';
     sillyCatImg.style.display = 'none';
@@ -270,6 +289,20 @@ impossibleButton.addEventListener('click', () => {
     textBubbleContent.textContent = 'You dare enter the domain of the almighty Tic-Tac-Toe God?! Foolish hooman! Prepare to be outwitted, outplayed, and outmeowed! I see all your moves, past, present, and future. In this realm, I\'m the eternal victor, and you\'re merely a pawn in my cosmic yarn game. Abandon hope, for your destiny is sealed: DEFEAT. Bow before my feline supremacy or suffer the consequences. Mwahaha!';
     gameBoard();
 }, {once: true});
+let chosenSymb;
+let xButton = document.getElementById('xButton');
+let oButton = document.getElementById('oButton');
+
+function symbSelect(){
+    xButton.addEventListener('click', () => {
+        
+        gameBoard();
+    })
+    oButton.addEventListener('click', () => {
+        
+        gameBoard();
+    })
+}
 let quoteNum;
 let godCatQuoteNums = [];
 function godCatQuotes(){
