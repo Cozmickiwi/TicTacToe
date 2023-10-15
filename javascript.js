@@ -36,8 +36,8 @@ const gameBoard = () => {
                 if (checkWin(playerX.playerMoves)) {
                     if(difficulty == 'medium' || difficulty == 'easy'){
                         textBubbleContent.textContent =  "You're, like, sooo good at this game! Congrats, I think... 😸";
-                    textContainer.textContent = 'X WINS!!!!';
-                    gameover = true;
+                        textContainer.textContent = 'X WINS!!!!';
+                        gameover = true;
                     }
                     else if(difficulty = 'twoPlayer'){
                         textContainer.textContent = 'X WINS!!!!';
@@ -55,10 +55,12 @@ const gameBoard = () => {
                     gameover = true;
                     return('a')
                 }
-                if (gameover != true || difficulty != 'twoPlayer') {
+                if (gameover != true) {
+                    if(difficulty != 'twoPlayer'){
                     setTimeout(() => {
                         computer();
                     }, 500);
+                }
                 }
             } else if (symb == 'O') {
                 playerO.playerMoves.push(Number(tile.id));
@@ -107,9 +109,7 @@ function makeMove(tileId, symbol) {
         gameover = true;
     } else {
         symb = symb === 'X' ? 'O' : 'X';
-        
         textContainer.textContent = `Player ${symb}'s turn!`;
-        
         if (symb === 'O') {
             computer();
         }
