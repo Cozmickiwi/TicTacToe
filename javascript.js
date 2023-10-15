@@ -99,9 +99,13 @@ function makeMove(tileId, symbol) {
     } else if (checkWin(playerO.playerMoves)) {
         if(difficulty == 'impossible'){
             textBubbleContent.textContent = "It's like I've been sayin', you're no match for this celestial cat. Bow before my almighty whiskers!";
+            gameover = true;
+            textContainer.textContent = 'O WINS!!!!';
         }
         else if(difficulty == 'medium' || difficulty == 'easy'){
             textBubbleContent.textContent = "Wow, I didn't even expect to win, but yay, I guess! 🐾";
+            gameover = true;
+            textContainer.textContent = 'O WINS!!!!';
         }
         gameover = true;
     } else if (playerX.playerMoves.length + playerO.playerMoves.length === 9) {
