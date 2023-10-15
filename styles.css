@@ -21,7 +21,7 @@ body {
 }
 
 .backgroundChange{
-    /*background-image: url(images/giphy1111_scaled_2x_minified\ \(1\).gif);*/
+    background-image: url(images/giphy1111_scaled_2x_minified\ \(1\).gif);
     background-size: cover;
     background-position: bottom;
 }
