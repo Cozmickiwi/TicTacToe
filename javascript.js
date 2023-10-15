@@ -25,12 +25,7 @@ const gameBoard = () => {
             if (gameover == true) {
                 return '';
             }
-            if(chosenSymb == 'O'){
-                tile.textContent = 'O';
-            }
-            else{
-                tile.textContent = symb;
-            }
+            tile.textContent = symb;
             tile.style.animationName = 'addSymbol';
             if (symb == 'X') {
                 playerX.playerMoves.push(Number(tile.id));
@@ -41,7 +36,6 @@ const gameBoard = () => {
                 if (checkWin(playerX.playerMoves)) {
                     if(difficulty == 'medium' || difficulty == 'easy'){
                         textBubbleContent.textContent =  "You're, like, sooo good at this game! Congrats, I think... 😸";
-                    
                     textContainer.textContent = 'X WINS!!!!';
                     gameover = true;
                     }
@@ -251,7 +245,6 @@ let buttons = document.querySelector('.buttons');
 let speechBubble = document.getElementById('speech-bubble');
 let easyButton = document.getElementById('easy');
 let twoPlayerButton = document.getElementById('2Player');
-
 easyButton.addEventListener('click', () => {
     difficulty = 'easy';
     speechBubble.style.animationDuration = '0s';
@@ -289,20 +282,6 @@ impossibleButton.addEventListener('click', () => {
     textBubbleContent.textContent = 'You dare enter the domain of the almighty Tic-Tac-Toe God?! Foolish hooman! Prepare to be outwitted, outplayed, and outmeowed! I see all your moves, past, present, and future. In this realm, I\'m the eternal victor, and you\'re merely a pawn in my cosmic yarn game. Abandon hope, for your destiny is sealed: DEFEAT. Bow before my feline supremacy or suffer the consequences. Mwahaha!';
     gameBoard();
 }, {once: true});
-let chosenSymb;
-let xButton = document.getElementById('xButton');
-let oButton = document.getElementById('oButton');
-
-function symbSelect(){
-    xButton.addEventListener('click', () => {
-        
-        gameBoard();
-    })
-    oButton.addEventListener('click', () => {
-        
-        gameBoard();
-    })
-}
 let quoteNum;
 let godCatQuoteNums = [];
 function godCatQuotes(){
